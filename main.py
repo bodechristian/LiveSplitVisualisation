@@ -55,7 +55,11 @@ if __name__ == "__main__":
     pb_times, golds, lst_diff, names = [], [], [], []
 
     for seg in segs:
-        pb = seg.find("SplitTimes")[0][0].text
+        pb = seg.find("SplitTimes")[0]
+        if pb:
+            pb = pb[0].text
+        else:
+            pb = 0
         gold = seg.find("BestSegmentTime")[0].text
         name = seg.find("Name").text
 
@@ -76,10 +80,9 @@ if __name__ == "__main__":
     fig.update_layout(barmode="overlay", hovermode="x unified", yaxis=dict(title="Seconds"), xaxis=dict(title="Split"),
                       legend_title="Legend")
 
-    fig.add_annotation(text=f"SoB: {strf_time(df['Golds'].sum())}",
-                       xref="paper", yref="paper", x=1.14, y=0.5, showarrow=False)
-    fig.add_annotation(text=f"PB: {strf_time(df['PB Times'].sum())}",
-                       xref="paper", yref="paper", x=1.14, y=0.43, showarrow=False)
+    fig.add_annotation(text=f"<b>SoB: {strf_time(df['Golds'].sum())}<br>PB: {strf_time(df['PB Times'].sum())}</b>",
+                       xref="paper", yref="paper", yanchor="bottom", x=0.5, y=1, showarrow=False,
+                       font=dict(color="white", size=16))
 
     if not exists(join(filepath, "graphs")):
         makedirs(join(filepath, "graphs"))
