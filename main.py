@@ -8,6 +8,7 @@ from os.path import join, split, exists
 from os import makedirs
 
 """
+    enter in activated venv to create .exe
     pyinstaller --onefile --noconsole main.py
 """
 
@@ -24,7 +25,7 @@ def strp_time(_str) -> float:
 def strf_time(_flt) -> str:
     """
     Converts seconds.ms to string
-    example: 91.867 ->
+    example: 91.867 -> '1:31.867'
     """
     res = ""
     s = round(_flt % 60, 3)
